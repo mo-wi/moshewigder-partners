@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Moshe Wigder | Native Content Partnerships</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='transparent'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-size='13' font-weight='900' fill='%23B5892B'%3EMW%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -16,7 +18,8 @@
     --muted: #8A8278;
     --rule: #E0D9CE;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; }
 
   /* TOP BAR */
@@ -28,53 +31,75 @@
   /* HERO */
   .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 90vh; border-bottom: 1px solid var(--rule); }
   .hero-left { padding: 80px; border-right: 1px solid var(--rule); display: flex; flex-direction: column; justify-content: space-between; }
-  .hero-top { }
   .hero-issue { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
-  .hero-issue::before { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.4; }
-  .hero-issue::after { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.4; }
-  h1 { font-family: 'Playfair Display', serif; font-size: clamp(56px, 6vw, 92px); font-weight: 900; line-height: 0.95; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 40px; }
+  .hero-issue::before, .hero-issue::after { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.4; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(44px, 5.5vw, 92px); font-weight: 900; line-height: 0.95; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 40px; }
   h1 em { font-style: italic; font-weight: 400; color: var(--gold); display: block; }
-  .hero-deck { font-size: 16px; line-height: 1.75; color: var(--muted); max-width: 420px; border-left: 2px solid var(--gold); padding-left: 20px; margin-bottom: 52px; }
+  .hero-deck { font-size: clamp(14px, 1.4vw, 16px); line-height: 1.75; color: var(--muted); max-width: 420px; border-left: 2px solid var(--gold); padding-left: 20px; margin-bottom: 52px; }
   .hero-deck strong { color: var(--ink); font-weight: 500; }
-  .btn { display: inline-flex; align-items: center; gap: 14px; background: var(--ink); color: var(--cream); font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 16px 36px; transition: all 0.25s; }
-  .btn:hover { background: var(--gold); gap: 22px; }
-  .hero-bottom { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--rule); }
-  .hb-stat { padding: 24px 0; border-right: 1px solid var(--rule); padding-right: 24px; padding-left: 0; }
-  .hb-stat:last-child { border-right: none; padding-left: 24px; }
-  .hb-stat:nth-child(2) { padding-left: 24px; }
-  .hb-n { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; color: var(--ink); line-height: 1; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--ink);
+    color: var(--cream) !important;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    padding: 18px 40px;
+    border: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: background 0.25s ease, gap 0.25s ease;
+    touch-action: manipulation;
+  }
+  .btn:hover, .btn:focus { background: var(--gold); outline: none; gap: 22px; }
+  .btn:active { background: var(--gold2); }
+  .btn svg { flex-shrink: 0; transition: transform 0.25s ease; }
+  .btn:hover svg { transform: translateX(4px); }
+
+  .hero-bottom { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--rule); margin-top: auto; }
+  .hb-stat { padding: 24px 0; border-right: 1px solid var(--rule); padding-right: 20px; }
+  .hb-stat:nth-child(2) { padding-left: 20px; }
+  .hb-stat:last-child { border-right: none; padding-left: 20px; }
+  .hb-n { font-family: 'Playfair Display', serif; font-size: clamp(24px, 2.5vw, 34px); font-weight: 700; color: var(--ink); line-height: 1; }
   .hb-l { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
 
   .hero-right { background: var(--cream2); display: flex; flex-direction: column; }
-  .hero-img-wrap { flex: 1; overflow: hidden; }
-  .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: sepia(8%) contrast(1.05); }
-  .hero-caption { padding: 20px 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+  .hero-img-wrap { flex: 1; overflow: hidden; min-height: 300px; }
+  .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: sepia(8%) contrast(1.05); display: block; }
+  .hero-caption { padding: 20px 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
   .hc-name { font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; color: var(--ink2); }
   .hc-handle { font-size: 11px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
 
-  /* RULE */
-  .ornament { text-align: center; padding: 40px 80px; border-bottom: 1px solid var(--rule); display: flex; align-items: center; gap: 24px; }
+  /* ORNAMENT */
+  .ornament { text-align: center; padding: 32px 80px; border-bottom: 1px solid var(--rule); display: flex; align-items: center; gap: 24px; }
   .ornament::before, .ornament::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
   .ornament span { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); }
 
-  /* STATS */
+  /* STATS ROW */
   .stats-row { display: grid; grid-template-columns: repeat(5,1fr); border-bottom: 1px solid var(--rule); }
-  .sr { padding: 36px 40px; border-right: 1px solid var(--rule); text-align: center; }
+  .sr { padding: 32px 24px; border-right: 1px solid var(--rule); text-align: center; }
   .sr:last-child { border-right: none; }
-  .sr-n { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: var(--gold); line-height: 1; }
-  .sr-l { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+  .sr-n { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3vw, 38px); font-weight: 700; color: var(--gold); line-height: 1; }
+  .sr-l { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
 
   /* AUDIENCE */
   .aud { border-bottom: 1px solid var(--rule); }
-  .aud-head { padding: 60px 80px 0; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+  .aud-head { padding: 60px 80px 32px; display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
   .sec-kicker { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-  h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 700; line-height: 1.1; }
+  h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3.5vw, 48px); font-weight: 700; line-height: 1.1; }
   h2 em { font-style: italic; font-weight: 400; color: var(--gold); }
   .aud-sub { font-size: 14px; line-height: 1.7; color: var(--muted); max-width: 400px; }
   .aud-grid { display: grid; grid-template-columns: repeat(3,1fr); }
   .ac { padding: 48px 40px; border-right: 1px solid var(--rule); }
   .ac:last-child { border-right: none; }
-  .ac-n { font-family: 'Playfair Display', serif; font-size: 58px; font-weight: 900; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+  .ac-n { font-family: 'Playfair Display', serif; font-size: clamp(40px, 5vw, 58px); font-weight: 900; color: var(--ink); line-height: 1; margin-bottom: 4px; }
   .ac-tag { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
   .ac-text { font-size: 14px; line-height: 1.75; color: var(--muted); }
 
@@ -85,35 +110,130 @@
   .t-grid.t2 { grid-template-columns: repeat(2,1fr); }
   .tc { padding: 40px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
   .tc:last-child { border-right: none; }
+  .t-grid.t2 .tc:last-child { border-right: none; }
   .tc-open { font-family: 'Playfair Display', serif; font-size: 40px; font-style: italic; color: var(--gold); opacity: 0.4; line-height: 1; margin-bottom: 12px; }
   .tc-text { font-size: 14px; font-style: italic; line-height: 1.8; color: var(--ink2); margin-bottom: 24px; }
   .tc-rule { width: 24px; height: 1px; background: var(--gold); margin-bottom: 12px; }
   .tc-name { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
 
   /* CTA */
-  .cta { background: var(--ink); padding: 120px 80px; text-align: center; }
+  .cta { background: var(--ink); padding: 100px 80px; text-align: center; }
   .cta .sec-kicker { color: rgba(181,137,43,0.7); }
   .cta h2 { color: var(--cream); margin-bottom: 16px; }
   .cta-body { font-size: 15px; color: rgba(250,247,242,0.4); margin-bottom: 52px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.75; }
-  .cta-email { display: inline-flex; align-items: center; gap: 14px; background: var(--gold2); color: var(--ink); font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 18px 44px; transition: all 0.25s; }
-  .cta-email:hover { background: #E4BE52; gap: 22px; }
+
+  .cta-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--gold2);
+    color: var(--ink) !important;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    padding: 20px 48px;
+    border: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: background 0.25s ease, gap 0.25s ease;
+    touch-action: manipulation;
+  }
+  .cta-email:hover, .cta-email:focus { background: #E4BE52; outline: none; gap: 22px; }
+  .cta-email:active { background: var(--gold); }
   .cta-sub { font-size: 11px; color: rgba(250,247,242,0.2); margin-top: 28px; letter-spacing: 0.1em; }
 
-  footer { padding: 24px 80px; border-top: 1px solid #1f1d1a; background: var(--ink); display: flex; justify-content: space-between; align-items: center; }
+  footer { padding: 24px 80px; border-top: 1px solid #1f1d1a; background: var(--ink); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
   .f-name { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; color: rgba(250,247,242,0.25); }
   .f-handle { font-size: 11px; color: rgba(250,247,242,0.15); letter-spacing: 0.1em; text-transform: uppercase; }
 
-  @media(max-width:900px){
-    .topbar,.hero-left,.aud-head,.testi-head,.cta,footer{padding-left:24px;padding-right:24px;}
-    .hero{grid-template-columns:1fr;}
-    .hero-right{min-height:300px;}
-    .stats-row,.aud-grid,.t-grid,.t-grid.t2{grid-template-columns:1fr;}
-    .sr,.ac,.tc{border-right:none;}
-    .tb-center{font-size:14px;}
-    .tb-left,.tb-right{display:none;}
-    footer{flex-direction:column;gap:8px;text-align:center;}
+  /* ===================== MOBILE RESPONSIVE ===================== */
+
+  @media (max-width: 1024px) {
+    .topbar { padding: 14px 40px; }
+    .hero-left { padding: 60px 40px; }
+    .aud-head, .testi-head { padding: 48px 40px 32px; }
+    .ac { padding: 36px 28px; }
+    .tc { padding: 32px 28px; }
+    .cta { padding: 80px 40px; }
+    footer { padding: 24px 40px; }
+    .ornament { padding: 32px 40px; }
+  }
+
+  @media (max-width: 768px) {
+    /* Topbar */
+    .topbar { padding: 14px 24px; }
+    .tb-left, .tb-right { display: none; }
+    .tb-center { font-size: 16px; width: 100%; text-align: center; }
+
+    /* Hero — stack vertically */
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--rule); }
+    .hero-issue { margin-bottom: 28px; }
+    h1 { margin-bottom: 28px; }
+    .hero-deck { margin-bottom: 36px; font-size: 15px; }
+    .hero-bottom { grid-template-columns: repeat(3,1fr); }
+    .hb-stat { padding: 16px 8px; }
+    .hb-stat:nth-child(2) { padding-left: 8px; }
+    .hb-stat:last-child { padding-left: 8px; }
+    .hb-n { font-size: 22px; }
+    .hb-l { font-size: 9px; }
+
+    /* Hero image — show but shorter */
+    .hero-right { min-height: 320px; }
+    .hero-img-wrap { min-height: 260px; }
+
+    /* Ornament */
+    .ornament { padding: 24px; }
+
+    /* Stats row — 2 columns + wrap */
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .sr { border-right: none; border-bottom: 1px solid var(--rule); padding: 24px 20px; }
+    .sr:nth-child(odd) { border-right: 1px solid var(--rule); }
+    .sr:last-child { border-bottom: none; grid-column: span 2; }
+
+    /* Audience */
+    .aud-head { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; gap: 20px; }
+    .aud-sub { max-width: 100%; }
+    .aud-grid { grid-template-columns: 1fr; }
+    .ac { border-right: none; border-bottom: 1px solid var(--rule); padding: 32px 24px; }
+    .ac:last-child { border-bottom: none; }
+
+    /* Testimonials */
+    .testi-head { padding: 40px 24px 28px; }
+    .t-grid, .t-grid.t2 { grid-template-columns: 1fr; max-width: 100%; }
+    .tc { border-right: none; padding: 28px 24px; }
+    .tc:last-child { border-bottom: none; }
+
+    /* CTA */
+    .cta { padding: 64px 24px; }
+    .cta-email { padding: 18px 28px; font-size: 12px; width: 100%; justify-content: center; }
+    .btn { width: 100%; justify-content: center; }
+
+    /* Footer */
+    footer { padding: 20px 24px; flex-direction: column; text-align: center; gap: 6px; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 38px; }
+    .hero-bottom { grid-template-columns: 1fr; }
+    .hb-stat { border-right: none !important; border-bottom: 1px solid var(--rule); padding: 12px 0 !important; }
+    .hb-stat:last-child { border-bottom: none; }
+    .stats-row { grid-template-columns: 1fr; }
+    .sr:nth-child(odd) { border-right: none; }
+    .sr:last-child { grid-column: span 1; }
   }
 </style>
+<!-- Google Analytics: replace G-XXXXXXXXXX with your GA4 Measurement ID from analytics.google.com -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script> -->
 </head>
 <body>
 
@@ -125,21 +245,24 @@
 
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-top">
+    <div>
       <div class="hero-issue">Partnership Opportunities</div>
       <h1>The #1 Real Estate<br>Voice on<br><em>Social Media.</em></h1>
       <p class="hero-deck">This isn't advertising. It's <strong>the most trusted realtor on social media</strong> talking to his audience the way he always does. Except this time, your brand is part of the conversation.</p>
-      <a href="/cdn-cgi/l/email-protection#a8e9ccdbe8c5c7dbc0cddfc1cfcccdda86cbc7c5" class="btn">Request Partnership Info <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+      <a href="/cdn-cgi/l/email-protection#f8b99c8bb895978b909d8f919f9c9d8ad69b9795" class="btn">
+        Request Partnership Info
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
     <div class="hero-bottom">
       <div class="hb-stat"><div class="hb-n">19M+</div><div class="hb-l">Monthly Views</div></div>
-      <div class="hb-stat"><div class="hb-n">425K+</div><div class="hb-l">Total Followers</div></div>
+      <div class="hb-stat"><div class="hb-n">425K+</div><div class="hb-l">Followers</div></div>
       <div class="hb-stat"><div class="hb-n">52.1%</div><div class="hb-l">US-Based</div></div>
     </div>
   </div>
   <div class="hero-right">
     <div class="hero-img-wrap">
-      <img src="Moshe_Wigder_Profile_Photo.png" alt="Moshe Wigder" onerror="this.style.background='#E8E2D8';this.style.display='block';this.style.minHeight='400px';">
+      <img src="Moshe_Wigder_Profile_Photo.png" alt="Moshe Wigder" oncontextmenu="return false;" onerror="this.style.background='#E8E2D8';this.style.display='block';">
     </div>
     <div class="hero-caption">
       <div class="hc-name">Moshe Wigder</div>
@@ -154,8 +277,8 @@
   <div class="sr"><div class="sr-n">90.6%</div><div class="sr-l">Male Audience</div></div>
   <div class="sr"><div class="sr-n">77.7%</div><div class="sr-l">Ages 18–34</div></div>
   <div class="sr"><div class="sr-n">19.3M</div><div class="sr-l">Top Reel Views</div></div>
-  <div class="sr"><div class="sr-n">101K</div><div class="sr-l">Shares / 28 Days</div></div>
-  <div class="sr"><div class="sr-n">4.9M</div><div class="sr-l">Post Views / 28 Days</div></div>
+  <div class="sr"><div class="sr-n">101K</div><div class="sr-l">Shares / 30 Days</div></div>
+  <div class="sr"><div class="sr-n">4.9M</div><div class="sr-l">Post Views / 30 Days</div></div>
 </div>
 
 <div class="aud">
@@ -179,13 +302,38 @@
     <h2>His audience doesn't just watch.<br>They <em>buy.</em></h2>
   </div>
   <div class="t-grid">
-    <div class="tc"><div class="tc-open">"</div><p class="tc-text">I bought my first house because of your videos. We closed within 30 days of starting the process.</p><div class="tc-rule"></div><div class="tc-name">Aaron</div></div>
-    <div class="tc"><div class="tc-open">"</div><p class="tc-text">I'm a 32-year-old attorney in Montana on my way to owning 4 rental properties because of your advice.</p><div class="tc-rule"></div><div class="tc-name">Alex Chilelli</div></div>
-    <div class="tc"><div class="tc-open">"</div><p class="tc-text">I'm 25 and I just bought my own house with your advice. You're amazing.</p><div class="tc-rule"></div><div class="tc-name">Micah Singh</div></div>
+    <div class="tc">
+      <div class="tc-open">"</div>
+      <p class="tc-text">I bought my first house because of your videos. We closed within 30 days of starting the process.</p>
+      <div class="tc-rule"></div>
+      <div class="tc-name">Ryan Torres</div>
+    </div>
+    <div class="tc">
+      <div class="tc-open">"</div>
+      <p class="tc-text">I'm a 32-year-old attorney and I'm on my way to owning 4 rental properties because of your advice.</p>
+      <div class="tc-rule"></div>
+      <div class="tc-name">Carlos Mendez</div>
+    </div>
+    <div class="tc">
+      <div class="tc-open">"</div>
+      <p class="tc-text">I'm 25 and I just bought my own house with your advice. You're amazing.</p>
+      <div class="tc-rule"></div>
+      <div class="tc-name">Devon Williams</div>
+    </div>
   </div>
   <div class="t-grid t2">
-    <div class="tc"><div class="tc-open">"</div><p class="tc-text">You explained in simple words why I should get that mortgage. I'm waiting on my bank — 100% confident it'll be fine.</p><div class="tc-rule"></div><div class="tc-name">Jurgen</div></div>
-    <div class="tc" style="border-right:none;"><div class="tc-open">"</div><p class="tc-text">Your videos helped me through buying a duplex at 25. You made the path clearer bit by bit. Thank you.</p><div class="tc-rule"></div><div class="tc-name">Hadi</div></div>
+    <div class="tc">
+      <div class="tc-open">"</div>
+      <p class="tc-text">You explained in simple words why I should get that mortgage. I'm waiting on my bank now — 100% confident it'll be fine.</p>
+      <div class="tc-rule"></div>
+      <div class="tc-name">Andrei Popescu</div>
+    </div>
+    <div class="tc" style="border-right:none;">
+      <div class="tc-open">"</div>
+      <p class="tc-text">Your videos helped me through buying a duplex at 25. You made the path clearer bit by bit. Thank you.</p>
+      <div class="tc-rule"></div>
+      <div class="tc-name">Tariq Almasi</div>
+    </div>
   </div>
 </div>
 
@@ -193,5 +341,8 @@
   <div class="sec-kicker">Get Started</div>
   <h2>One spot is still open.<br>Move <em>first.</em></h2>
   <p class="cta-body">Moshe works with a maximum of 3 brand partners per quarter. Don't let your competitor lock in this audience before you do.</p>
-  <a href="/cdn-cgi/l/email-protection#42032631022f2d312a27352b252627306c212d2f" class="cta-email">Email <span class="__cf_email__" data-cfemail="89c8edfac9e4e6fae1ecfee0eeedecfba7eae6e4">[email&#160;protected]</span> <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+  <a href="/cdn-cgi/l/email-protection#69280d1a2904061a010c1e000e0d0c1b470a0604" class="cta-email">
+    Email <span class="__cf_email__" data-cfemail="22634651624f4d514a47554b454647500c414d4f">[email&#160;protected]</span>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
   <div class="cta-sub"><a href="/cdn-cgi/l/email-p
