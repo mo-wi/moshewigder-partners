@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moshe Wigder | Native Content Partnerships</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --cream2: #F2EDE4;
+    --gold: #B5892B;
+    --gold2: #D4A93C;
+    --ink: #141210;
+    --ink2: #2C2820;
+    --muted: #8A8278;
+    --rule: #E0D9CE;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+  /* TOP BAR */
+  .topbar { border-bottom: 1px solid var(--rule); padding: 14px 80px; display: flex; justify-content: space-between; align-items: center; }
+  .tb-left { font-family: 'Playfair Display', serif; font-size: 13px; font-style: italic; color: var(--muted); }
+  .tb-center { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink); }
+  .tb-right { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 90vh; border-bottom: 1px solid var(--rule); }
+  .hero-left { padding: 80px; border-right: 1px solid var(--rule); display: flex; flex-direction: column; justify-content: space-between; }
+  .hero-top { }
+  .hero-issue { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 48px; display: flex; align-items: center; gap: 12px; }
+  .hero-issue::before { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.4; }
+  .hero-issue::after { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.4; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(56px, 6vw, 92px); font-weight: 900; line-height: 0.95; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 40px; }
+  h1 em { font-style: italic; font-weight: 400; color: var(--gold); display: block; }
+  .hero-deck { font-size: 16px; line-height: 1.75; color: var(--muted); max-width: 420px; border-left: 2px solid var(--gold); padding-left: 20px; margin-bottom: 52px; }
+  .hero-deck strong { color: var(--ink); font-weight: 500; }
+  .btn { display: inline-flex; align-items: center; gap: 14px; background: var(--ink); color: var(--cream); font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 16px 36px; transition: all 0.25s; }
+  .btn:hover { background: var(--gold); gap: 22px; }
+  .hero-bottom { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; border-top: 1px solid var(--rule); }
+  .hb-stat { padding: 24px 0; border-right: 1px solid var(--rule); padding-right: 24px; padding-left: 0; }
+  .hb-stat:last-child { border-right: none; padding-left: 24px; }
+  .hb-stat:nth-child(2) { padding-left: 24px; }
+  .hb-n { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; color: var(--ink); line-height: 1; }
+  .hb-l { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+  .hero-right { background: var(--cream2); display: flex; flex-direction: column; }
+  .hero-img-wrap { flex: 1; overflow: hidden; }
+  .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: sepia(8%) contrast(1.05); }
+  .hero-caption { padding: 20px 32px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; }
+  .hc-name { font-family: 'Playfair Display', serif; font-size: 16px; font-style: italic; color: var(--ink2); }
+  .hc-handle { font-size: 11px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+
+  /* RULE */
+  .ornament { text-align: center; padding: 40px 80px; border-bottom: 1px solid var(--rule); display: flex; align-items: center; gap: 24px; }
+  .ornament::before, .ornament::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+  .ornament span { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); }
+
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(5,1fr); border-bottom: 1px solid var(--rule); }
+  .sr { padding: 36px 40px; border-right: 1px solid var(--rule); text-align: center; }
+  .sr:last-child { border-right: none; }
+  .sr-n { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: var(--gold); line-height: 1; }
+  .sr-l { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+  /* AUDIENCE */
+  .aud { border-bottom: 1px solid var(--rule); }
+  .aud-head { padding: 60px 80px 0; display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
+  .sec-kicker { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  h2 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 700; line-height: 1.1; }
+  h2 em { font-style: italic; font-weight: 400; color: var(--gold); }
+  .aud-sub { font-size: 14px; line-height: 1.7; color: var(--muted); max-width: 400px; }
+  .aud-grid { display: grid; grid-template-columns: repeat(3,1fr); }
+  .ac { padding: 48px 40px; border-right: 1px solid var(--rule); }
+  .ac:last-child { border-right: none; }
+  .ac-n { font-family: 'Playfair Display', serif; font-size: 58px; font-weight: 900; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+  .ac-tag { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
+  .ac-text { font-size: 14px; line-height: 1.75; color: var(--muted); }
+
+  /* TESTIMONIALS */
+  .testi-wrap { border-bottom: 1px solid var(--rule); }
+  .testi-head { padding: 60px 80px 40px; border-bottom: 1px solid var(--rule); }
+  .t-grid { display: grid; grid-template-columns: repeat(3,1fr); }
+  .t-grid.t2 { grid-template-columns: repeat(2,1fr); }
+  .tc { padding: 40px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .tc:last-child { border-right: none; }
+  .tc-open { font-family: 'Playfair Display', serif; font-size: 40px; font-style: italic; color: var(--gold); opacity: 0.4; line-height: 1; margin-bottom: 12px; }
+  .tc-text { font-size: 14px; font-style: italic; line-height: 1.8; color: var(--ink2); margin-bottom: 24px; }
+  .tc-rule { width: 24px; height: 1px; background: var(--gold); margin-bottom: 12px; }
+  .tc-name { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  /* CTA */
+  .cta { background: var(--ink); padding: 120px 80px; text-align: center; }
+  .cta .sec-kicker { color: rgba(181,137,43,0.7); }
+  .cta h2 { color: var(--cream); margin-bottom: 16px; }
+  .cta-body { font-size: 15px; color: rgba(250,247,242,0.4); margin-bottom: 52px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.75; }
+  .cta-email { display: inline-flex; align-items: center; gap: 14px; background: var(--gold2); color: var(--ink); font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; padding: 18px 44px; transition: all 0.25s; }
+  .cta-email:hover { background: #E4BE52; gap: 22px; }
+  .cta-sub { font-size: 11px; color: rgba(250,247,242,0.2); margin-top: 28px; letter-spacing: 0.1em; }
+
+  footer { padding: 24px 80px; border-top: 1px solid #1f1d1a; background: var(--ink); display: flex; justify-content: space-between; align-items: center; }
+  .f-name { font-family: 'Playfair Display', serif; font-size: 15px; font-style: italic; color: rgba(250,247,242,0.25); }
+  .f-handle { font-size: 11px; color: rgba(250,247,242,0.15); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  @media(max-width:900px){
+    .topbar,.hero-left,.aud-head,.testi-head,.cta,footer{padding-left:24px;padding-right:24px;}
+    .hero{grid-template-columns:1fr;}
+    .hero-right{min-height:300px;}
+    .stats-row,.aud-grid,.t-grid,.t-grid.t2{grid-template-columns:1fr;}
+    .sr,.ac,.tc{border-right:none;}
+    .tb-center{font-size:14px;}
+    .tb-left,.tb-right{display:none;}
+    footer{flex-direction:column;gap:8px;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-left">Native Content Partnership</div>
+  <div class="tb-center">Moshe Wigder</div>
+  <div class="tb-right">@moshewigder</div>
+</div>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-top">
+      <div class="hero-issue">Partnership Opportunities</div>
+      <h1>The #1 Real Estate<br>Voice on<br><em>Social Media.</em></h1>
+      <p class="hero-deck">This isn't advertising. It's <strong>the most trusted realtor on social media</strong> talking to his audience the way he always does. Except this time, your brand is part of the conversation.</p>
+      <a href="mailto:Ads@moshewigder.com" class="btn">Request Partnership Info <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+    </div>
+    <div class="hero-bottom">
+      <div class="hb-stat"><div class="hb-n">19M+</div><div class="hb-l">Monthly Views</div></div>
+      <div class="hb-stat"><div class="hb-n">425K+</div><div class="hb-l">Total Followers</div></div>
+      <div class="hb-stat"><div class="hb-n">52.1%</div><div class="hb-l">US-Based</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="Moshe_Wigder_Profile_Photo.jpeg" alt="Moshe Wigder" onerror="this.style.background='#E8E2D8';this.style.display='block';this.style.minHeight='400px';">
+    </div>
+    <div class="hero-caption">
+      <div class="hc-name">Moshe Wigder</div>
+      <div class="hc-handle">NJ Realtor · @moshewigder</div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament"><span>✦</span></div>
+
+<div class="stats-row">
+  <div class="sr"><div class="sr-n">90.6%</div><div class="sr-l">Male Audience</div></div>
+  <div class="sr"><div class="sr-n">77.7%</div><div class="sr-l">Ages 18–34</div></div>
+  <div class="sr"><div class="sr-n">19.3M</div><div class="sr-l">Top Reel Views</div></div>
+  <div class="sr"><div class="sr-n">101K</div><div class="sr-l">Shares / 28 Days</div></div>
+  <div class="sr"><div class="sr-n">4.9M</div><div class="sr-l">Post Views / 28 Days</div></div>
+</div>
+
+<div class="aud">
+  <div class="aud-head">
+    <div>
+      <div class="sec-kicker">The Audience</div>
+      <h2>You're not buying reach.<br>You're buying <em>trust.</em></h2>
+    </div>
+    <p class="aud-sub">First-time buyers. Investors. Renters looking to own. They follow Moshe because he tells them the truth. Your brand earns credibility by association.</p>
+  </div>
+  <div class="aud-grid">
+    <div class="ac"><div class="ac-n">90.6%</div><div class="ac-tag">Male</div><div class="ac-text">Mortgage lenders, PropTech platforms, home warranty brands — this is your exact customer. Already in buying mode. Already trusting Moshe's word.</div></div>
+    <div class="ac"><div class="ac-n">77.7%</div><div class="ac-tag">Ages 18–34</div><div class="ac-text">The prime homebuying demographic. They don't trust ads — but they trust Moshe. That trust is now transferable to your brand.</div></div>
+    <div class="ac"><div class="ac-n">52.1%</div><div class="ac-tag">US-Based</div><div class="ac-text">New York. Los Angeles. Chicago. Real buyers in the markets that matter most. Decision-makers, not just viewers.</div></div>
+  </div>
+</div>
+
+<div class="testi-wrap">
+  <div class="testi-head">
+    <div class="sec-kicker">Social Proof</div>
+    <h2>His audience doesn't just watch.<br>They <em>buy.</em></h2>
+  </div>
+  <div class="t-grid">
+    <div class="tc"><div class="tc-open">"</div><p class="tc-text">I bought my first house because of your videos. We closed within 30 days of starting the process.</p><div class="tc-rule"></div><div class="tc-name">Aaron</div></div>
+    <div class="tc"><div class="tc-open">"</div><p class="tc-text">I'm a 32-year-old attorney in Montana on my way to owning 4 rental properties because of your advice.</p><div class="tc-rule"></div><div class="tc-name">Alex Chilelli</div></div>
+    <div class="tc"><div class="tc-open">"</div><p class="tc-text">I'm 25 and I just bought my own house with your advice. You're amazing.</p><div class="tc-rule"></div><div class="tc-name">Micah Singh</div></div>
+  </div>
+  <div class="t-grid t2">
+    <div class="tc"><div class="tc-open">"</div><p class="tc-text">You explained in simple words why I should get that mortgage. I'm waiting on my bank — 100% confident it'll be fine.</p><div class="tc-rule"></div><div class="tc-name">Jurgen</div></div>
+    <div class="tc" style="border-right:none;"><div class="tc-open">"</div><p class="tc-text">Your videos helped me through buying a duplex at 25. You made the path clearer bit by bit. Thank you.</p><div class="tc-rule"></div><div class="tc-name">Hadi</div></div>
+  </div>
+</div>
+
+<div class="cta">
+  <div class="sec-kicker">Get Started</div>
+  <h2>One spot is still open.<br>Move <em>first.</em></h2>
+  <p class="cta-body">Moshe works with a maximum of 3 brand partners per quarter. Don't let your competitor lock in this audience before you do.</p>
+  <a href="mailto:Ads@moshewigder.com" class="cta-email">Email Ads@moshewigder.com <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+  <div class="cta-sub">Ads@moshewigder.com</div>
+</div>
+
+<footer>
+  <div class="f-name">Moshe Wigder · @moshewigder</div>
+  <div class="f-handle">Licensed NJ Real Estate Agent · Notary Public</div>
+</footer>
+
+</body>
+</html>
