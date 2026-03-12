@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
+<!-- Disable Cloudflare email obfuscation on this page -->
+<meta name="cf-no-email" content="true">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Moshe Wigder | Native Content Partnerships</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='transparent'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='DM+Sans,sans-serif' font-size='13' font-weight='900' fill='%23B5892B'%3EMW%3C/text%3E%3C/svg%3E">
@@ -542,15 +544,12 @@ setTbVar();
 window.addEventListener('resize', setTbVar, { passive: true });
 
 /* ---- EMAIL BUTTONS ---- */
-var _em = ['A','d','s','@','m','o','s','h','e','w','i','g','d','e','r','.','c','o','m'].join('');
-function openMail(e) {
-  if (e) e.preventDefault();
-  var a = document.createElement('a');
-  a.href = 'mailto:' + _em;
-  a.style.display = 'none';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(function () { document.body.removeChild(a); }, 100);
+/* window.location.href bypasses Cloudflare email-protection (which only intercepts anchor clicks) */
+var _e1 = ['A','d','s'];
+var _e2 = ['m','o','s','h','e','w','i','g','d','e','r','.','c','o','m'];
+function openMail(ev) {
+  if (ev) ev.preventDefault();
+  window.location.href = 'mai' + 'lto:' + _e1.join('') + String.fromCharCode(64) + _e2.join('');
 }
 var btns = document.querySelectorAll('.email-btn');
 for (var i = 0; i < btns.length; i++) {
