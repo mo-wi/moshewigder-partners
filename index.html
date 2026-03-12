@@ -21,6 +21,7 @@
   --muted:  #8A8278;
   --rule:   #E0D9CE;
   --font:   'DM Sans', sans-serif;
+  --tb:     52px;
 }
 
 /* ============================================================
@@ -109,35 +110,39 @@ em.draw.vis::after { animation: drawLine 0.85s 0.25s cubic-bezier(0.22,0.61,0.36
 ============================================================ */
 .hero {
   display: grid; grid-template-columns: 1fr 1fr;
-  min-height: 90vh; border-bottom: 1px solid var(--rule); overflow: hidden;
+  height: calc(100vh - var(--tb));
+  height: calc(100dvh - var(--tb));
+  min-height: 560px;
+  border-bottom: 1px solid var(--rule); overflow: hidden;
 }
 .hero-l {
-  padding: 80px; border-right: 1px solid var(--rule);
+  padding: 48px 80px; border-right: 1px solid var(--rule);
   display: flex; flex-direction: column; justify-content: space-between;
+  overflow: hidden;
 }
 
 /* Kicker bar */
 .kicker {
   font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold);
-  display: flex; align-items: center; gap: 14px; margin-bottom: 44px;
+  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
   animation: fadeUp 0.6s 0.1s cubic-bezier(0.22,0.61,0.36,1) both;
 }
 .kicker::before, .kicker::after { content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.35; }
 
 /* H1 typewriter */
 h1 {
-  font-family: var(--font); font-size: clamp(42px, 5.2vw, 88px);
+  font-family: var(--font); font-size: clamp(38px, 5.2vw, 88px);
   font-weight: 900; line-height: 1.0; letter-spacing: -0.02em;
-  color: var(--ink); margin-bottom: 36px;
+  color: var(--ink); margin-bottom: 24px;
 }
 h1 .twl  { display: block; }
 h1 em    { font-style: italic; font-weight: 400; color: var(--gold); }
 
 /* Deck */
 .deck {
-  font-size: clamp(14px, 1.3vw, 15px); line-height: 1.78; color: var(--muted);
+  font-size: clamp(14px, 1.3vw, 15px); line-height: 1.72; color: var(--muted);
   border-left: 2px solid var(--gold); padding-left: 20px;
-  max-width: 420px; margin-bottom: 48px;
+  max-width: 420px; margin-bottom: 28px;
   animation: fadeUp 0.6s 0.75s cubic-bezier(0.22,0.61,0.36,1) both;
 }
 .deck strong { color: var(--ink2); font-weight: 500; }
@@ -152,7 +157,7 @@ h1 em    { font-style: italic; font-weight: 400; color: var(--gold); }
   transition: background 0.22s, gap 0.22s, transform 0.12s;
   touch-action: manipulation; -webkit-appearance: none;
   animation: fadeUp 0.6s 0.9s cubic-bezier(0.22,0.61,0.36,1) both;
-  margin-bottom: 48px;
+  margin-bottom: 0;
 }
 .btn:hover, .btn:focus { background: var(--gold); gap: 22px; outline: none; }
 .btn:active { transform: scale(0.98); }
@@ -291,7 +296,7 @@ footer {
 ============================================================ */
 @media (max-width: 1024px) {
   .topbar   { padding: 14px 40px; }
-  .hero-l   { padding: 60px 40px; }
+  .hero-l   { padding: 40px; }
   .aud-head { padding: 48px 40px 28px; }
   .testi-head { padding: 48px 40px 32px; }
   .ac       { padding: 36px 28px; }
@@ -315,8 +320,8 @@ footer {
   .tb-left, .tb-right { display: none; }
   .tb-mid  { width: 100%; text-align: center; }
 
-  .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-l { padding: 44px 20px; border-right: none; border-bottom: 1px solid var(--rule); }
+  .hero { grid-template-columns: 1fr; height: auto; min-height: auto; }
+  .hero-l { padding: 36px 20px; border-right: none; border-bottom: 1px solid var(--rule); overflow: visible; }
   .kicker { margin-bottom: 28px; }
   .deck   { font-size: 15px; margin-bottom: 32px; }
   .btn    { width: 100%; justify-content: center; margin-bottom: 32px; }
@@ -528,20 +533,33 @@ footer {
 (function () {
 'use strict';
 
+/* ---- TOPBAR HEIGHT → CSS VAR ---- */
+var topbar = document.getElementById('topbar');
+function setTbVar() {
+  document.documentElement.style.setProperty('--tb', topbar.offsetHeight + 'px');
+}
+setTbVar();
+window.addEventListener('resize', setTbVar, { passive: true });
+
 /* ---- EMAIL BUTTONS ---- */
-var _m = 'mai' + 'lto' + ':' + 'Ads' + String.fromCharCode(64) + 'moshewigder.com';
-function openMail() { window.location.href = _m; }
+var _em = ['A','d','s','@','m','o','s','h','e','w','i','g','d','e','r','.','c','o','m'].join('');
+function openMail(e) {
+  if (e) e.preventDefault();
+  var a = document.createElement('a');
+  a.href = 'mailto:' + _em;
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function () { document.body.removeChild(a); }, 100);
+}
 var btns = document.querySelectorAll('.email-btn');
 for (var i = 0; i < btns.length; i++) {
   btns[i].style.cursor = 'pointer';
   btns[i].addEventListener('click', openMail);
   btns[i].addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMail(); }
+    if (e.key === 'Enter' || e.key === ' ') openMail(e);
   });
 }
-
-/* ---- STICKY TOPBAR ---- */
-var topbar = document.getElementById('topbar');
 window.addEventListener('scroll', function () {
   topbar.classList.toggle('scrolled', window.pageYOffset > 50);
 }, { passive: true });
