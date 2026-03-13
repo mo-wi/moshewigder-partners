@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
-<!-- Disable Cloudflare email obfuscation on this page -->
-<meta name="cf-no-email" content="true">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Moshe Wigder | Native Content Partnerships</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='transparent'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='DM+Sans,sans-serif' font-size='13' font-weight='900' fill='%23B5892B'%3EMW%3C/text%3E%3C/svg%3E">
@@ -101,6 +99,7 @@ em.draw.vis::after { animation: drawLine 0.85s 0.25s cubic-bezier(0.22,0.61,0.36
 .topbar.scrolled {
   box-shadow: 0 2px 20px rgba(20,18,16,0.07);
   background: rgba(250,247,242,0.96);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 .tb-left  { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
@@ -166,22 +165,11 @@ h1 em    { font-style: italic; font-weight: 400; color: var(--gold); }
 .btn svg { flex-shrink: 0; transition: transform 0.22s; }
 .btn:hover svg { transform: translateX(4px); }
 
-/* Mini stats row at hero bottom */
-.hero-stats {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  border-top: 1px solid var(--rule);
-}
-.hs { padding: 22px 0; }
-.hs:not(:last-child) { border-right: 1px solid var(--rule); padding-right: 18px; }
-.hs:not(:first-child) { padding-left: 18px; }
-.hs-n { font-size: clamp(22px, 2.4vw, 30px); font-weight: 900; color: var(--ink); line-height: 1; }
-.hs-l { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
-
 /* Hero right: photo with parallax */
 .hero-r { background: var(--cream2); display: flex; flex-direction: column; overflow: hidden; }
 .hero-img-wrap { flex: 1; overflow: hidden; min-height: 280px; }
 .hero-img-wrap img {
-  width: 100%; height: 115%; object-fit: cover; object-position: center top;
+  width: 100%; height: 125%; object-fit: cover; object-position: center top;
   will-change: transform;
 }
 .hero-cap {
@@ -193,14 +181,37 @@ h1 em    { font-style: italic; font-weight: 400; color: var(--gold); }
 .hc-handle { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
 
 /* ============================================================
-   STATS BAR
+   STATS BAR — MARQUEE TICKER
 ============================================================ */
-.stats-bar { display: grid; grid-template-columns: repeat(5,1fr); border-bottom: 1px solid var(--rule); }
-.sb { padding: 28px 20px; border-right: 1px solid var(--rule); text-align: center; transition: background 0.22s; }
-.sb:last-child { border-right: none; }
-.sb:hover { background: var(--cream2); }
-.sb-n { font-size: clamp(26px, 2.8vw, 36px); font-weight: 900; color: var(--gold); line-height: 1; }
+.stats-bar {
+  overflow: hidden; border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+.stats-bar::before,
+.stats-bar::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 60px; z-index: 2; pointer-events: none;
+}
+.stats-bar::before { left: 0; background: linear-gradient(to right, var(--cream), transparent); }
+.stats-bar::after  { right: 0; background: linear-gradient(to left, var(--cream), transparent); }
+.sb-track {
+  display: flex; width: max-content;
+  animation: ticker 28s linear infinite;
+}
+.sb-track:hover { animation-play-state: paused; }
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+.sb {
+  padding: 28px 40px; border-right: 1px solid var(--rule);
+  text-align: center; flex-shrink: 0; white-space: nowrap;
+}
+.sb-n { font-size: clamp(22px, 2.2vw, 30px); font-weight: 900; color: var(--gold); line-height: 1; }
 .sb-l { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-top: 5px; }
+.sb-dot {
+  width: 4px; height: 4px; border-radius: 50%; background: var(--gold2); opacity: 0.4;
+  align-self: center; flex-shrink: 0; margin: 0 20px;
+}
 
 /* ============================================================
    SECTION HEADS (shared)
@@ -211,23 +222,31 @@ h2 { font-family: var(--font); font-size: clamp(26px, 3.2vw, 44px); font-weight:
 /* ============================================================
    AUDIENCE
 ============================================================ */
+.aud-wrap { background: var(--ink); }
 .aud-head {
-  padding: 60px 80px 32px; border-bottom: 1px solid var(--rule);
+  padding: 60px 80px 32px; border-bottom: 1px solid #2a2824;
   display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap;
 }
-.aud-sub { font-size: 14px; line-height: 1.72; color: var(--muted); max-width: 400px; }
-.aud-grid { display: grid; grid-template-columns: repeat(3,1fr); border-bottom: 1px solid var(--rule); }
+.aud-head h2 { color: var(--cream); }
+.aud-head .sec-kicker { color: rgba(181,137,43,0.55); }
+.aud-sub { font-size: 14px; line-height: 1.72; color: rgba(250,247,242,0.65); max-width: 400px; }
+.aud-grid { display: grid; grid-template-columns: repeat(3,1fr); border-bottom: 1px solid #2a2824; }
 .ac {
-  padding: 48px 40px; border-right: 1px solid var(--rule); transition: background 0.22s;
+  padding: 48px 40px; border-right: 1px solid #2a2824; transition: background 0.22s;
 }
 .ac:last-child { border-right: none; }
-.ac:hover { background: var(--cream2); }
-.ac-n { font-size: clamp(38px, 4.8vw, 56px); font-weight: 900; color: var(--ink); line-height: 1; margin-bottom: 4px; }
-.ac-tag {
-  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold);
-  margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--rule);
+.ac:hover { background: rgba(250,247,242,0.03); }
+.ac-num {
+  font-size: clamp(11px, 1vw, 13px); font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold2); margin-bottom: 18px;
+  display: flex; align-items: center; gap: 10px;
 }
-.ac-body { font-size: 13px; line-height: 1.75; color: var(--muted); }
+.ac-num::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold2); flex-shrink: 0; }
+.ac-tag {
+  font-size: clamp(20px, 2.2vw, 28px); font-weight: 900; letter-spacing: -0.01em;
+  color: var(--cream); line-height: 1.1; margin-bottom: 16px;
+}
+.ac-body { font-size: 13px; line-height: 1.8; color: rgba(250,247,242,0.72); }
 
 /* ============================================================
    TESTIMONIALS CAROUSEL
@@ -251,13 +270,22 @@ h2 { font-family: var(--font); font-size: clamp(26px, 3.2vw, 44px); font-weight:
 .tc-text  { font-size: 14px; font-style: italic; line-height: 1.8; color: var(--ink2); margin-bottom: 20px; }
 .tc-rule  { width: 24px; height: 1px; background: var(--gold); margin-bottom: 10px; }
 .tc-name  { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
-.carousel-dots { display: flex; justify-content: center; gap: 8px; padding: 20px 0; }
+.carousel-dots { display: flex; justify-content: center; gap: 8px; padding: 16px 0 0; }
 .dot {
   width: 6px; height: 6px; border-radius: 50%; border: none; padding: 0;
   background: var(--rule); cursor: pointer;
   transition: background 0.28s, transform 0.28s;
 }
 .dot.active { background: var(--gold); transform: scale(1.45); }
+.carousel-arrows { display: flex; justify-content: center; gap: 12px; padding: 16px 0 28px; }
+.car-arr {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--rule); background: transparent;
+  color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s; touch-action: manipulation;
+}
+.car-arr:hover, .car-arr:focus { background: var(--ink); border-color: var(--ink); color: var(--cream); outline: none; }
+.car-arr:active { transform: scale(0.95); }
 
 /* ============================================================
    CTA
@@ -280,7 +308,83 @@ h2 { font-family: var(--font); font-size: clamp(26px, 3.2vw, 44px); font-weight:
 .cta-btn:active { transform: scale(0.98); }
 .cta-btn svg { flex-shrink: 0; transition: transform 0.22s; }
 .cta-btn:hover svg { transform: translateX(4px); }
-.cta-sub { font-size: 11px; color: rgba(250,247,242,0.18); margin-top: 24px; letter-spacing: 0.1em; }
+
+/* ============================================================
+   CONTACT SECTION
+============================================================ */
+.contact {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--rule);
+}
+.contact-l {
+  padding: 80px 80px;
+  border-right: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 40px;
+  background: var(--cream);
+}
+.contact-r {
+  padding: 80px 80px;
+  background: var(--cream2);
+}
+
+/* Left: info */
+.contact-email-label { font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.contact-email-display {
+  display: flex; align-items: center; gap: 0;
+  border: 1px solid var(--rule);
+  margin-bottom: 0;
+}
+.contact-email-addr {
+  flex: 1; padding: 14px 16px;
+  font-size: 15px; font-weight: 500; color: var(--ink2);
+  letter-spacing: 0.01em; user-select: all;
+}
+.contact-copy {
+  background: var(--ink); color: var(--cream);
+  border: none; cursor: pointer; padding: 14px 18px;
+  font-family: var(--font); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  transition: background 0.2s; white-space: nowrap; flex-shrink: 0;
+}
+.contact-copy:hover { background: var(--gold); }
+.contact-copy.copied { background: #2a7a4b; }
+
+/* Right: form */
+.cf { display: flex; flex-direction: column; gap: 16px; }
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cf-field { display: flex; flex-direction: column; gap: 6px; }
+.cf-label {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted); font-weight: 500;
+}
+.cf-input, .cf-textarea {
+  background: var(--cream); border: 1px solid var(--rule);
+  font-family: var(--font); font-size: 14px; font-weight: 300;
+  color: var(--ink); padding: 13px 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none; border-radius: 0; width: 100%;
+}
+.cf-input:focus, .cf-textarea:focus {
+  outline: none; border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(181,137,43,0.12);
+}
+.cf-textarea { resize: vertical; min-height: 110px; }
+.cf-submit {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  background: var(--ink); color: var(--cream);
+  font-family: var(--font); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 18px 36px; border: none; cursor: pointer; width: 100%;
+  transition: background 0.22s, gap 0.22s, transform 0.12s;
+  touch-action: manipulation; -webkit-appearance: none; border-radius: 0;
+}
+.cf-submit:hover, .cf-submit:focus { background: var(--gold); gap: 18px; outline: none; }
+.cf-submit:active { transform: scale(0.99); }
+.cf-submit svg { flex-shrink: 0; transition: transform 0.22s; }
+.cf-submit:hover svg { transform: translateX(3px); }
+.cf-msg { font-size: 12px; color: var(--muted); margin-top: 4px; min-height: 18px; }
+.cf-msg.success { color: #2a7a4b; }
+.cf-msg.error   { color: #b52b2b; }
 
 /* ============================================================
    FOOTER
@@ -305,13 +409,8 @@ footer {
   .tc       { padding: 32px 28px; }
   .cta      { padding: 80px 40px; }
   footer    { padding: 20px 40px; }
-
-  /* Stats bar: 3 top + 2 bottom on tablet */
-  .stats-bar { grid-template-columns: repeat(3,1fr); }
-  .stats-bar .sb:nth-child(3) { border-right: none; }
-  .stats-bar .sb:nth-child(4),
-  .stats-bar .sb:nth-child(5) { border-top: 1px solid var(--rule); }
-  .stats-bar .sb:nth-child(4) { border-right: 1px solid var(--rule); }
+  .contact-l { padding: 60px 40px; }
+  .contact-r { padding: 60px 40px; }
 }
 
 /* ============================================================
@@ -327,22 +426,13 @@ footer {
   .kicker { margin-bottom: 28px; }
   .deck   { font-size: 15px; margin-bottom: 32px; }
   .btn    { width: 100%; justify-content: center; margin-bottom: 32px; }
-  .hero-stats { grid-template-columns: repeat(3,1fr); }
-  .hs     { padding: 16px 8px !important; }
-  .hs-n   { font-size: 21px; }
-  .hs-l   { font-size: 9px; }
-  .hero-r { min-height: 300px; }
-  .hero-img-wrap { min-height: 240px; }
-
-  .stats-bar { grid-template-columns: repeat(2,1fr); }
-  .sb { border-right: none; border-bottom: 1px solid var(--rule); padding: 22px 16px; }
-  .sb:nth-child(odd)  { border-right: 1px solid var(--rule); }
-  .sb:last-child { border-bottom: none; grid-column: span 2; }
+  .hero-r { min-height: 260px; }
+  .hero-img-wrap { min-height: 220px; }
 
   .aud-head { padding: 36px 20px 24px; flex-direction: column; align-items: flex-start; gap: 16px; }
   .aud-sub  { max-width: 100%; }
   .aud-grid { grid-template-columns: 1fr; }
-  .ac { border-right: none; border-bottom: 1px solid var(--rule); padding: 30px 20px; }
+  .ac { border-right: none; border-bottom: 1px solid #2a2824; padding: 30px 20px; }
   .ac:last-child { border-bottom: none; }
 
   .testi-head { padding: 36px 20px 28px; }
@@ -351,6 +441,12 @@ footer {
   .cta    { padding: 60px 20px; }
   .cta-btn { padding: 18px 28px; font-size: 11px; width: 100%; justify-content: center; }
   footer  { padding: 18px 20px; flex-direction: column; text-align: center; }
+
+  /* Contact section mobile */
+  .contact { grid-template-columns: 1fr; }
+  .contact-l { padding: 48px 20px 40px; border-right: none; border-bottom: 1px solid var(--rule); }
+  .contact-r { padding: 40px 20px 48px; }
+  .cf-row { grid-template-columns: 1fr; }
 }
 
 /* ============================================================
@@ -358,21 +454,52 @@ footer {
 ============================================================ */
 @media (max-width: 420px) {
   h1 { font-size: 36px; }
-  .hero-stats { grid-template-columns: 1fr; }
-  .hs { border-right: none !important; border-bottom: 1px solid var(--rule); padding: 14px 0 !important; }
-  .hs:last-child { border-bottom: none; }
-  .stats-bar { grid-template-columns: 1fr; }
-  .stats-bar .sb:nth-child(3) { border-right: none; }
-  .stats-bar .sb:nth-child(4) { border-right: none; border-top: none; }
-  .sb:nth-child(odd) { border-right: none; }
-  .sb:last-child { grid-column: span 1; }
+  .contact-email-display { flex-direction: column; }
+  .contact-copy { width: 100%; text-align: center; padding: 12px; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+  .sb-track { animation: none; }
 }
 </style>
-<!-- Google Analytics placeholder — replace G-XXXXXXXXXX with your GA4 ID -->
-<!--
+<!-- ============================================================
+     GOOGLE ANALYTICS 4
+     SETUP: Replace G-XXXXXXXXXX with your GA4 Measurement ID
+     Get it at: analytics.google.com → Admin → Data Streams → your stream → Measurement ID
+============================================================ -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
--->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX', {
+    page_title: 'Moshe Wigder Partnership Page',
+    send_page_view: true
+  });
+
+  /* Track CTA button clicks */
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.email-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        gtag('event', 'cta_click', {
+          event_category: 'engagement',
+          event_label: btn.classList.contains('cta-btn') ? 'cta_section' : 'hero_button'
+        });
+      });
+    });
+    var copyBtn = document.getElementById('modal-copy-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        gtag('event', 'email_copy', { event_category: 'engagement', event_label: 'modal_copy' });
+      });
+    }
+  });
+</script>
 </head>
 <body>
 
@@ -391,9 +518,9 @@ footer {
 
       <!-- Typewriter H1: placeholders hold space before JS fires -->
       <h1 aria-label="The #1 Real Estate Voice on Social Media.">
-        <span class="twl" id="tw1"><span style="visibility:hidden">The #1 Real Estate</span></span>
-        <span class="twl" id="tw2"><span style="visibility:hidden">Voice on</span></span>
-        <span class="twl" id="tw3"><em><span style="visibility:hidden">Social Media.</span></em></span>
+        <span class="twl" id="tw1" aria-hidden="true"><span style="visibility:hidden">The #1 Real Estate</span></span>
+        <span class="twl" id="tw2" aria-hidden="true"><span style="visibility:hidden">Voice on</span></span>
+        <span class="twl" id="tw3" aria-hidden="true"><em><span style="visibility:hidden">Social Media.</span></em></span>
       </h1>
 
       <p class="deck">
@@ -401,24 +528,20 @@ footer {
         talking to his audience the way he always does. Except this time, your brand is part of the conversation.
       </p>
 
-      <span class="btn email-btn" role="button" tabindex="0">
+      <button type="button" class="btn email-btn">
         Request Partnership Info
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-      </span>
+      </button>
     </div>
 
-    <div class="hero-stats">
-      <div class="hs"><div class="hs-n">19M+</div><div class="hs-l">Monthly Views</div></div>
-      <div class="hs"><div class="hs-n">425K+</div><div class="hs-l">Followers</div></div>
-      <div class="hs"><div class="hs-n">52.1%</div><div class="hs-l">US-Based</div></div>
-    </div>
   </div>
 
   <div class="hero-r">
     <div class="hero-img-wrap" id="par-wrap">
-      <img id="par-img" src="Moshe_Wigder_Profile_Photo.png" alt="Moshe Wigder"
+      <img id="par-img" src="Moshe_Wigder_Profile_Photo.svg" alt="Moshe Wigder"
+           fetchpriority="high" loading="eager"
            oncontextmenu="return false;"
            onerror="this.style.background='#E8E2D8';this.style.minHeight='360px';">
     </div>
@@ -430,38 +553,61 @@ footer {
 </section>
 
 <!-- STATS BAR -->
-<div class="stats-bar stg">
-  <div class="sb"><div class="sb-n">90.6%</div><div class="sb-l">Male Audience</div></div>
-  <div class="sb"><div class="sb-n">77.7%</div><div class="sb-l">Ages 18 to 34</div></div>
-  <div class="sb"><div class="sb-n">19.3M</div><div class="sb-l">Top Reel Views</div></div>
-  <div class="sb"><div class="sb-n">101K</div><div class="sb-l">Shares / 30 Days</div></div>
-  <div class="sb"><div class="sb-n">4.9M</div><div class="sb-l">Post Views / 30 Days</div></div>
+<div class="stats-bar">
+  <div class="sb-track">
+    <div class="sb"><div class="sb-n">19.3M</div><div class="sb-l">Top Reel Views</div></div>
+    <div class="sb"><div class="sb-n">90.6%</div><div class="sb-l">Male Audience</div></div>
+    <div class="sb"><div class="sb-n">101K</div><div class="sb-l">Shares / 30 Days</div></div>
+    <div class="sb"><div class="sb-n">77.7%</div><div class="sb-l">Ages 18 to 34</div></div>
+    <div class="sb"><div class="sb-n">4.9M</div><div class="sb-l">Post Views / 30 Days</div></div>
+    <div class="sb"><div class="sb-n">425K+</div><div class="sb-l">Combined Followers</div></div>
+    <div class="sb"><div class="sb-n">52.1%</div><div class="sb-l">US-Based</div></div>
+    <div class="sb"><div class="sb-n">19M+</div><div class="sb-l">Monthly Views</div></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="sb"><div class="sb-n">19.3M</div><div class="sb-l">Top Reel Views</div></div>
+    <div class="sb"><div class="sb-n">90.6%</div><div class="sb-l">Male Audience</div></div>
+    <div class="sb"><div class="sb-n">101K</div><div class="sb-l">Shares / 30 Days</div></div>
+    <div class="sb"><div class="sb-n">77.7%</div><div class="sb-l">Ages 18 to 34</div></div>
+    <div class="sb"><div class="sb-n">4.9M</div><div class="sb-l">Post Views / 30 Days</div></div>
+    <div class="sb"><div class="sb-n">425K+</div><div class="sb-l">Combined Followers</div></div>
+    <div class="sb"><div class="sb-n">52.1%</div><div class="sb-l">US-Based</div></div>
+    <div class="sb"><div class="sb-n">19M+</div><div class="sb-l">Monthly Views</div></div>
+    <!-- Third copy for ultrawide screens -->
+    <div class="sb"><div class="sb-n">19.3M</div><div class="sb-l">Top Reel Views</div></div>
+    <div class="sb"><div class="sb-n">90.6%</div><div class="sb-l">Male Audience</div></div>
+    <div class="sb"><div class="sb-n">101K</div><div class="sb-l">Shares / 30 Days</div></div>
+    <div class="sb"><div class="sb-n">77.7%</div><div class="sb-l">Ages 18 to 34</div></div>
+    <div class="sb"><div class="sb-n">4.9M</div><div class="sb-l">Post Views / 30 Days</div></div>
+    <div class="sb"><div class="sb-n">425K+</div><div class="sb-l">Combined Followers</div></div>
+    <div class="sb"><div class="sb-n">52.1%</div><div class="sb-l">US-Based</div></div>
+    <div class="sb"><div class="sb-n">19M+</div><div class="sb-l">Monthly Views</div></div>
+  </div>
 </div>
 
 <!-- AUDIENCE -->
-<div>
+<div class="aud-wrap">
   <div class="aud-head">
     <div class="ao">
       <div class="sec-kicker">The Audience</div>
-      <h2>You&rsquo;re not buying reach.<br>You&rsquo;re buying <em class="draw">trust.</em></h2>
+      <h2>You&rsquo;re not buying reach.<br>You&rsquo;re buying <em class="draw" style="color:var(--gold)">trust.</em></h2>
     </div>
     <p class="aud-sub ao">90.6% male. 77.7% ages 18 to 34. 52.1% US-based. These are not passive scrollers. They are people actively making the biggest financial decisions of their lives, and they trust Moshe&rsquo;s word.</p>
   </div>
   <div class="aud-grid stg">
     <div class="ac">
-      <div class="ac-n">90.6%</div>
-      <div class="ac-tag">Male</div>
-      <div class="ac-body">Mortgage lenders, PropTech platforms, home warranty brands. This is your exact customer. Already in buying mode. Already trusting Moshe&rsquo;s word.</div>
+      <div class="ac-num">90.6% Male</div>
+      <div class="ac-tag">Your exact customer.</div>
+      <div class="ac-body">Mortgage lenders, PropTech platforms, home warranty brands. Already in buying mode. Already trusting Moshe&rsquo;s word.</div>
     </div>
     <div class="ac">
-      <div class="ac-n">77.7%</div>
-      <div class="ac-tag">Ages 18 to 34</div>
-      <div class="ac-body">The prime homebuying demographic. They don&rsquo;t trust ads, but they trust Moshe. That trust is now transferable to your brand.</div>
+      <div class="ac-num">77.7% Ages 18 to 34</div>
+      <div class="ac-tag">The prime homebuyer.</div>
+      <div class="ac-body">Earning. Searching. Ready to move. They don&rsquo;t trust ads, but they trust Moshe. That trust is now transferable to your brand.</div>
     </div>
     <div class="ac">
-      <div class="ac-n">52.1%</div>
-      <div class="ac-tag">US-Based</div>
-      <div class="ac-body">New York. Los Angeles. Chicago. Real buyers in the markets that matter most. Decision-makers, not just viewers.</div>
+      <div class="ac-num">52.1% US-Based</div>
+      <div class="ac-tag">Real buyers, real markets.</div>
+      <div class="ac-body">New York. Los Angeles. Chicago. Decision-makers in the markets that matter most. Not just viewers.</div>
     </div>
   </div>
 </div>
@@ -508,6 +654,14 @@ footer {
     </div>
   </div>
   <div class="carousel-dots" id="c-dots"></div>
+  <div class="carousel-arrows">
+    <button type="button" class="car-arr" id="c-prev" aria-label="Previous testimonial">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9L11 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button type="button" class="car-arr" id="c-next" aria-label="Next testimonial">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 4L12 9L7 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
 </div>
 
 <!-- CTA -->
@@ -516,15 +670,71 @@ footer {
   <div class="sec-kicker ao">Get Started</div>
   <h2 class="ao" style="color:var(--cream)">One spot is still open.<br>Move <em class="draw" style="color:var(--gold)">first.</em></h2>
   <p class="ao">Moshe works with a maximum of 3 brand partners per quarter. Don&rsquo;t let your competitor lock in this audience before you do.</p>
-  <span class="cta-btn email-btn ao" role="button" tabindex="0">
-    Email Ads&#64;moshewigder.com
+  <button type="button" class="cta-btn email-btn ao">
+    Get in Touch — Request Partnership Info
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
       <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-  </span>
-  <div class="cta-sub ao">Ads&#64;moshewigder.com</div>
+  </button>
   </div>
 </div>
+
+<!-- CONTACT SECTION -->
+<section class="contact" id="contact">
+
+  <!-- LEFT: info + email display -->
+  <div class="contact-l">
+    <div>
+      <div class="sec-kicker" style="margin-bottom:12px">Get in Touch</div>
+      <h2 style="font-size:clamp(28px,3vw,40px);line-height:1.1;margin-bottom:16px">
+        Let&rsquo;s talk about<br><em class="draw">your brand.</em>
+      </h2>
+      <p style="font-size:14px;line-height:1.8;color:var(--muted);max-width:340px;margin-bottom:36px">
+        Moshe works with a maximum of 3 brand partners per quarter. Spots fill fast. Email us directly or use the form.
+      </p>
+    </div>
+    <div>
+      <div class="contact-email-label">Partnership Email</div>
+      <div class="contact-email-display">
+        <div class="contact-email-addr" id="contact-addr"></div>
+        <button type="button" class="contact-copy" id="contact-copy-btn">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: form -->
+  <div class="contact-r">
+    <div class="sec-kicker" style="margin-bottom:20px">Send a Message</div>
+    <form class="cf" id="contact-form" novalidate>
+      <div class="cf-row">
+        <div class="cf-field">
+          <label class="cf-label" for="cf-name">Your Name</label>
+          <input class="cf-input" id="cf-name" name="name" type="text" placeholder="Jane Smith" autocomplete="name" required>
+        </div>
+        <div class="cf-field">
+          <label class="cf-label" for="cf-company">Company</label>
+          <input class="cf-input" id="cf-company" name="company" type="text" placeholder="Your company" required>
+        </div>
+      </div>
+      <div class="cf-field">
+        <label class="cf-label" for="cf-email">Your Email</label>
+        <input class="cf-input" id="cf-email" name="email" type="email" placeholder="you@company.com" autocomplete="email" required>
+      </div>
+      <div class="cf-field">
+        <label class="cf-label" for="cf-msg">Message</label>
+        <textarea class="cf-textarea" id="cf-msg" name="message" placeholder="Tell us about your brand and what you're looking to achieve..."></textarea>
+      </div>
+      <button type="submit" class="cf-submit">
+        Send Message
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+          <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="cf-msg" id="cf-status" role="alert" aria-live="polite"></div>
+    </form>
+  </div>
+
+</section>
 
 <footer>
   <div class="f-name">Moshe Wigder</div>
@@ -535,7 +745,7 @@ footer {
 (function () {
 'use strict';
 
-/* ---- TOPBAR HEIGHT → CSS VAR ---- */
+/* ---- TOPBAR HEIGHT CSS VAR ---- */
 var topbar = document.getElementById('topbar');
 function setTbVar() {
   document.documentElement.style.setProperty('--tb', topbar.offsetHeight + 'px');
@@ -543,22 +753,110 @@ function setTbVar() {
 setTbVar();
 window.addEventListener('resize', setTbVar, { passive: true });
 
-/* ---- EMAIL BUTTONS ---- */
-/* window.location.href bypasses Cloudflare email-protection (which only intercepts anchor clicks) */
-var _e1 = ['A','d','s'];
-var _e2 = ['m','o','s','h','e','w','i','g','d','e','r','.','c','o','m'];
-function openMail(ev) {
-  if (ev) ev.preventDefault();
-  window.location.href = 'mai' + 'lto:' + _e1.join('') + String.fromCharCode(64) + _e2.join('');
-}
-var btns = document.querySelectorAll('.email-btn');
-for (var i = 0; i < btns.length; i++) {
-  btns[i].style.cursor = 'pointer';
-  btns[i].addEventListener('click', openMail);
-  btns[i].addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') openMail(e);
+/* ---- INJECT EMAIL ADDRESS (bypass Cloudflare obfuscation) ---- */
+var emailAddr = (function () {
+  var c = [65,100,115,64,109,111,115,104,101,119,105,103,100,101,114,46,99,111,109];
+  var s = ''; for (var n = 0; n < c.length; n++) s += String.fromCharCode(c[n]);
+  return s;
+})();
+var contactAddrEl = document.getElementById('contact-addr');
+if (contactAddrEl) contactAddrEl.textContent = emailAddr;
+
+/* ---- SCROLL TO CONTACT on hero CTA click ---- */
+var heroBtns = document.querySelectorAll('.email-btn');
+for (var i = 0; i < heroBtns.length; i++) {
+  heroBtns[i].addEventListener('click', function (e) {
+    e.preventDefault();
+    var section = document.getElementById('contact');
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 }
+
+/* ---- COPY EMAIL BUTTON ---- */
+var copyBtn = document.getElementById('contact-copy-btn');
+function doCopy() {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(emailAddr).then(function () {
+      copyBtn.textContent = 'Copied!'; copyBtn.classList.add('copied');
+      setTimeout(function () { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2500);
+    }).catch(fallbackCopy);
+  } else { fallbackCopy(); }
+}
+function fallbackCopy() {
+  var ta = document.createElement('textarea');
+  ta.value = emailAddr; ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try {
+    document.execCommand('copy');
+    copyBtn.textContent = 'Copied!'; copyBtn.classList.add('copied');
+    setTimeout(function () { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2500);
+  } catch(e) {}
+  document.body.removeChild(ta);
+}
+if (copyBtn) copyBtn.addEventListener('click', doCopy);
+
+/* ---- CONTACT FORM SUBMIT (mailto) ---- */
+var form   = document.getElementById('contact-form');
+var status = document.getElementById('cf-status');
+if (form) {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name    = document.getElementById('cf-name').value.trim();
+    var company = document.getElementById('cf-company').value.trim();
+    var email   = document.getElementById('cf-email').value.trim();
+    var msg     = document.getElementById('cf-msg').value.trim();
+
+    if (!name || !company || !email) {
+      status.textContent = 'Please fill in your name, company, and email.';
+      status.className = 'cf-msg error';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      status.textContent = 'Please enter a valid email address.';
+      status.className = 'cf-msg error';
+      return;
+    }
+
+    var submitBtn = form.querySelector('.cf-submit');
+    submitBtn.disabled = true;
+    status.textContent = 'Sending...';
+    status.className = 'cf-msg';
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: '15ae7838-c285-4802-96f2-4c225d794887',
+        subject: 'Partnership Inquiry — ' + company,
+        from_name: name,
+        email: email,
+        message: 'Company: ' + company + '\nEmail: ' + email + (msg ? '\n\nMessage:\n' + msg : '')
+      })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.success) {
+        status.textContent = 'Message sent. We\'ll be in touch shortly.';
+        status.className = 'cf-msg success';
+        form.reset();
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'form_submit', { event_category: 'engagement', event_label: 'contact_form' });
+        }
+      } else {
+        status.textContent = 'Something went wrong. Email us directly at Ads@moshewigder.com';
+        status.className = 'cf-msg error';
+        submitBtn.disabled = false;
+      }
+    })
+    .catch(function(){
+      status.textContent = 'Network error. Email us at Ads@moshewigder.com';
+      status.className = 'cf-msg error';
+      submitBtn.disabled = false;
+    });
+  });
+}
+
+/* ---- TOPBAR SCROLL STATE ---- */
 window.addEventListener('scroll', function () {
   topbar.classList.toggle('scrolled', window.pageYOffset > 50);
 }, { passive: true });
@@ -598,12 +896,12 @@ function typeLine(li, ci) {
 }
 setTimeout(function () { typeLine(0, 0); }, START_MS);
 
-/* ---- PARALLAX ---- */
+/* ---- PARALLAX (desktop only) ---- */
 var parImg  = document.getElementById('par-img');
 var parWrap = document.getElementById('par-wrap');
 var parRaf  = false;
 window.addEventListener('scroll', function () {
-  if (window.innerWidth <= 768) return; /* disable on mobile */
+  if (window.innerWidth <= 768) return;
   if (!parImg || !parWrap) return;
   if (parRaf) return;
   parRaf = true;
@@ -677,7 +975,7 @@ function prev() { goTo(cur > 0 ? cur - 1 : 0); }
 var dragStartX  = null;
 var dragStartY  = 0;
 var isDragging  = false;
-var isHorizDrag = null; /* null = undecided, true = horizontal, false = vertical */
+var isHorizDrag = null;
 
 function onDragStart(x, y) {
   dragStartX  = x;
@@ -691,13 +989,10 @@ function onDragMove(x, y) {
   if (dragStartX === null) return;
   var dx = x - dragStartX;
   var dy = y - dragStartY;
-
-  /* Decide axis on first significant movement */
   if (isHorizDrag === null && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
     isHorizDrag = Math.abs(dx) > Math.abs(dy);
   }
-  if (!isHorizDrag) return; /* vertical — let page scroll */
-
+  if (!isHorizDrag) return;
   isDragging = true;
   var pv  = perView();
   var w   = 100 / pv;
@@ -714,30 +1009,29 @@ function onDragEnd(x) {
   isHorizDrag = null;
   isDragging  = false;
   if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }
-  else { goTo(cur); } /* snap back */
+  else { goTo(cur); }
 }
 
-/* Mouse */
+/* Mouse events */
 track.addEventListener('mousedown',  function (e) { onDragStart(e.clientX, e.clientY); });
 track.addEventListener('mousemove',  function (e) { if (dragStartX !== null) { e.preventDefault(); onDragMove(e.clientX, e.clientY); } });
 track.addEventListener('mouseup',    function (e) { onDragEnd(e.clientX); });
-track.addEventListener('mouseleave', function (e) { onDragEnd(dragStartX !== null ? e.clientX : dragStartX); dragStartX = null; });
+track.addEventListener('mouseleave', function (e) { if (dragStartX !== null) { onDragEnd(e.clientX); dragStartX = null; } });
 
-/* Touch */
+/* Touch events */
 track.addEventListener('touchstart', function (e) {
   onDragStart(e.touches[0].clientX, e.touches[0].clientY);
 }, { passive: true });
 
 track.addEventListener('touchmove', function (e) {
   if (dragStartX === null) return;
-  /* Determine axis first */
   var dx = e.touches[0].clientX - dragStartX;
   var dy = e.touches[0].clientY - dragStartY;
   if (isHorizDrag === null && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
     isHorizDrag = Math.abs(dx) > Math.abs(dy);
   }
   if (isHorizDrag) {
-    e.preventDefault(); /* prevent page scroll while swiping carousel */
+    e.preventDefault();
     onDragMove(e.touches[0].clientX, e.touches[0].clientY);
   }
 }, { passive: false });
@@ -755,38 +1049,28 @@ if (outer) {
     if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
     if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
   });
+
+  /* Prev/Next arrow buttons */
+  var prevBtn = document.getElementById('c-prev');
+  var nextBtn = document.getElementById('c-next');
+  if (prevBtn) prevBtn.addEventListener('click', function () { prev(); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { next(); });
 }
 
-/* Desktop scroll-to-advance */
-var scrollLock = false;
-if (outer) {
-  outer.addEventListener('wheel', function (e) {
-    if (window.innerWidth <= 768) return;
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-    /* Recalc maxIdx fresh each time */
-    maxIdx = Math.max(0, total - perView());
-    if (scrollLock) { e.preventDefault(); return; }
-    if (e.deltaY > 0 && cur < maxIdx) {
-      e.preventDefault(); next();
-      scrollLock = true; setTimeout(function () { scrollLock = false; }, 420);
-    } else if (e.deltaY < 0 && cur > 0) {
-      e.preventDefault(); prev();
-      scrollLock = true; setTimeout(function () { scrollLock = false; }, 420);
-    }
-    /* At boundaries: don't preventDefault so page scrolls naturally */
-  }, { passive: false });
-}
-
+/* Resize: rebuild without animation flash */
 var resizeTimer;
 window.addEventListener('resize', function () {
   track.style.transition = 'none';
-  buildDots(); goTo(0);
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(function () { track.style.transition = ''; }, 100);
-});
+  resizeTimer = setTimeout(function () {
+    buildDots();
+    goTo(Math.min(cur, Math.max(0, total - perView())));
+    requestAnimationFrame(function () { track.style.transition = ''; });
+  }, 80);
+}, { passive: true });
 
-/* Init */
-buildDots(); goTo(0);
+buildDots();
+goTo(0);
 
 })();
 </script>
